@@ -23,8 +23,8 @@ class GoogleImage
 
 end
 
-@google = GoogleImage.new
-
-get '/launder' do
-  @google.first_photo_url(params[:url])
+get %r{/launder/(.+)}  do |url|
+  @@google ||= GoogleImage.new
+  @@google.first_photo_url(url)
 end
+
