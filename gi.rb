@@ -1,6 +1,8 @@
+require 'rubygems'
 require 'sinatra'
 require 'cgi'
 require 'watir-webdriver'
+require 'headless'
 
 class GoogleImage
 
@@ -23,8 +25,11 @@ class GoogleImage
 
 end
 
+headless = Headless.new(:display => 0, :reuse => true, :destroy_at_exit => false)
+headless.start
+
 get %r{/launder/(.+)}  do |url|
   @@google ||= GoogleImage.new
   @@google.first_photo_url(url)
+#  headless.destroy
 end
-
